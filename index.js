@@ -23,7 +23,7 @@ class Analytics {
    * @param {Object} [options] (optional)
    *   @property {Number} [flushAt] (default: 20)
    *   @property {Number} [flushInterval] (default: 10000)
-   *   @property {String} [host] (default: 'https://api.segment.io')
+   *   @property {String} [host] (default: 'https://api.dreamdata.cloud')
    *   @property {Boolean} [enable] (default: true)
    *   @property {Object} [axiosConfig] (optional)
    *   @property {Object} [axiosInstance] (default: axios.create(options.axiosConfig))
@@ -34,11 +34,11 @@ class Analytics {
   constructor (writeKey, options) {
     options = options || {}
 
-    assert(writeKey, 'You must pass your Segment project\'s write key.')
+    assert(writeKey, 'You must pass your Dreamdata project\'s write key.')
 
     this.queue = []
     this.writeKey = writeKey
-    this.host = removeSlash(options.host || 'https://api.segment.io')
+    this.host = removeSlash(options.host || 'https://api.dreamdata.cloud')
     this.path = removeSlash(options.path || '/v1/batch')
     let axiosInstance = options.axiosInstance
     if (axiosInstance == null) {
@@ -176,7 +176,7 @@ class Analytics {
     message.type = type
     message.context = Object.assign({
       library: {
-        name: 'analytics-node',
+        name: '@dreamdata/analytics',
         version
       }
     }, message.context)
@@ -275,7 +275,7 @@ class Analytics {
     // but browsers such as Chrome and Safari have not caught up.
     const headers = {}
     if (typeof window === 'undefined') {
-      headers['user-agent'] = `analytics-node/${version}`
+      headers['user-agent'] = `@dreamdata/analytics/${version}`
     }
 
     const req = {
